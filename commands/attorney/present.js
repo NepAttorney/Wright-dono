@@ -22,8 +22,9 @@ module.exports = class PresentCommand extends Commando.Command {
      */
     async run(message, args) {
         const target = message.mentions.users.first();
-        const evidence = args[1]
         if (target) {
+            args.shift()
+            const evidence = args.join(" ")
             let member = message.guild.members.cache.get(target.id);
 
             message.channel.send(`**Take that!**\nYou presented ${evidence} to ${member}`);
