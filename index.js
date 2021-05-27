@@ -35,4 +35,49 @@ client.once('ready', async () => {
         .registerCommandsIn(path.join(__dirname, "commands"));
 });
 
+
+const logChannel = '847449922532802561'
+
+client.on('guildCreate', (guild) => {
+    client.channels.cache.get(logChannel).send(
+        new Discord.MessageEmbed()
+            .setTitle(`I joined a new server!`)
+            .setThumbnail(guild.iconURL({
+                size: 4096,
+                dynamic: true
+            }))
+            .addFields(
+                {name: "Server Name", value: `${guild.name}`},
+                {name: "Server ID", value: `${guild.id}`},
+                {name: "Owner Name", value: `${guild.owner}`},
+                {name: "Owner ID", value: `${guild.owner.id}`},
+                {name: "Member Count", value: `${guild.memberCount}`}
+            )
+            .setFooter(`Currently in ${client.guilds.cache.size} servers!`)
+            .setTimestamp()
+            .setColor('#ff97e0')
+    );
+});
+
+client.on('guildDelete', (guild) => {
+    client.channels.cache.get(logChannel).send(
+        new Discord.MessageEmbed()
+            .setTitle(`I got removed from a server!`)
+            .setThumbnail(guild.iconURL({
+                size: 4096,
+                dynamic: true
+            }))
+            .addFields(
+                {name: "Server Name", value: `${guild.name}`},
+                {name: "Server ID", value: `${guild.id}`},
+                {name: "Owner Name", value: `${guild.owner}`},
+                {name: "Owner ID", value: `${guild.owner.id}`},
+                {name: "Member Count", value: `${guild.memberCount}`}
+            )
+            .setFooter(`Currently in ${client.guilds.cache.size} servers!`)
+            .setTimestamp()
+            .setColor('RED')
+    );
+});
+
 client.login(process.env.TOKEN);
